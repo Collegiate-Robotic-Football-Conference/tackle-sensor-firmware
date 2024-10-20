@@ -178,6 +178,7 @@ int main(void)
   printf("Robotic Football Tackle Sensor\n");
   printf("Version: %d.%d.%d\n", FW_MAJOR_VER, FW_MINOR_VER, FW_PATCH_VER);
   Settings_Init();
+  RGBLed_Init();
   if( !Accelerometer_Init() )
   {
 	  printf("Failed to initialize accelerometer.\n");
@@ -189,11 +190,39 @@ int main(void)
 		  if( !Accelerometer_Init() )
 		  {
 			  printf("Failed to initialize accelerometer.\n");
+
+			  // System Failed to start properly.  This indicates serious damage to the sensor and the sensor won't work.
+			  // Let the user know.
+			  HAL_GPIO_WritePin(TACKLE_STATUS_GPIO_Port, TACKLE_STATUS_Pin, GPIO_PIN_RESET);
+			  while(1)
+			  {
+				  for( int i = 0; i < 3; i++ )
+				  {
+					  RGBLed_SetRed(true);
+					  HAL_Delay(200);
+					  RGBLed_SetOff();
+					  HAL_Delay(200);
+				  }
+				  for( int i = 0; i < 3; i++ )
+				  {
+					  RGBLed_SetRed(true);
+					  HAL_Delay(400);
+					  RGBLed_SetOff();
+					  HAL_Delay(400);
+				  }
+				  for( int i = 0; i < 3; i++ )
+				  {
+					  RGBLed_SetRed(true);
+					  HAL_Delay(200);
+					  RGBLed_SetOff();
+					  HAL_Delay(200);
+				  }
+				  HAL_Delay(500);
+			  }
 		  }
 	  }
   }
 
-  RGBLed_Init();
   UserTimer_Init(&timer_ctx, 2000);
   SerialCommands_Init(&command_ctx, commands, NUM_COMMANDS, "\n");
 
@@ -201,6 +230,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  __HAL_IWDG_START(&hiwdg);
   Accelerometer_Data data = {0};
   float smoothed_data_x = 0;
   float smoothed_data_y = 0;
