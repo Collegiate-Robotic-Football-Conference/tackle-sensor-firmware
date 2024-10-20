@@ -181,6 +181,16 @@ int main(void)
   if( !Accelerometer_Init() )
   {
 	  printf("Failed to initialize accelerometer.\n");
+	  HAL_Delay(500);
+	  if( !Accelerometer_Init() )
+	  {
+		  printf("Failed to initialize accelerometer.\n");
+		  HAL_Delay(500);
+		  if( !Accelerometer_Init() )
+		  {
+			  printf("Failed to initialize accelerometer.\n");
+		  }
+	  }
   }
 
   RGBLed_Init();
