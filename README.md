@@ -28,10 +28,10 @@ Open a git bash terminal in the directory of your choosing and call the followin
 - Either a SEGGER Jlink or an STLink can be used to connect to the MCU.
 - ![debugger](Documentation/images/debugger.png)
 
-## Flashing Only
-
+## [Updating Firmware](Documentation/firmware-update-procedure/firmware-update-procedure.md)
 - Use a tool like [ST32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) if using an STLink or [JFlashLite](https://www.segger.com/downloads/jlink/) if using a SEGGER JLink to load a pre-built binary onto the STM32.
-- The "target" is the STM32G031F8P6.
+- The "target" is the STM32G031F8.
+- [Here is a detailed Firmware update procedure using JLINK.](Documentation/firmware-update-procedure/firmware-update-procedure.md)
 
 ## Interfacing with UART
 
